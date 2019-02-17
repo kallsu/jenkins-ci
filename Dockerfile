@@ -12,12 +12,9 @@ RUN apt-get update && \
     apt-get update && \
     apt-get -y install docker-ce && \
     apt-get -y install apt-utils openssh-server openssh-client && \
-    apt-get upgrade
+    apt-get -y upgrade
 
 USER jenkins
 
 # redefine the entrypoint of jenkins image
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/jenkins.sh"]
-
-COPY plugins.sh /usr/local/bin/plugins.sh
-COPY install-plugins.sh /usr/local/bin/install-plugins.sh
