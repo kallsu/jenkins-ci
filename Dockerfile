@@ -4,6 +4,7 @@ FROM jenkins/jenkins:${JENKINS_VERSION}
 
 USER root
 
+# install all dependencies
 RUN apt-get update && \
     apt-get -y install apt-transport-https ca-certificates curl gnupg2 software-properties-common && \
     curl -fsSL https://download.docker.com/linux/debian/gpg > /tmp/dkey && \ 
@@ -14,6 +15,10 @@ RUN apt-get update && \
     apt-get -y install apt-utils openssh-server openssh-client && \
     apt-get -y upgrade
 
+# add jenkins user to docker group
+RUN usermod -aG docker jenkins
+
+# switch back to jenkins user
 USER jenkins
 
 # redefine the entrypoint of jenkins image
